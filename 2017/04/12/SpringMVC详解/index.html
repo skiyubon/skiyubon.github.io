@@ -1,431 +1,170 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
+    <meta charset="utf-8">
     
+    <title>SpringMVC详解 | Skiyubon&#39;s	Blog</title>
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
+        <meta name="keywords" content="SpringMVC" />
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="SpringMVC," />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
-
-
-
-
-
-
-<meta name="keywords" content="SpringMVC">
+    <meta name="keywords" content="SpringMVC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringMVC详解">
 <meta property="og:url" content="https://skiyubon.github.io/2017/04/12/SpringMVC详解/index.html">
 <meta property="og:site_name" content="Skiyubon&#39;s	Blog">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/DispacherServlet01.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/SpingMVC01.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/SpringMVC02.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2014.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2016.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2017.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2018.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2019.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2020.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2021.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2022.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2023.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2024.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2025.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2027.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2028.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2029.png">
-<meta property="og:image" content="https://skiyubon.github.io/uploads/SpringMVC/Image%2030.png">
 <meta property="og:updated_time" content="2017-04-13T02:10:47.290Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC详解">
 <meta name="twitter:image" content="https://skiyubon.github.io/uploads/SpringMVC/DispacherServlet01.png">
+    
+
+    
+        <link rel="alternate" href="/" title="Skiyubon&#39;s	Blog" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
 
 
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://skiyubon.github.io/2017/04/12/SpringMVC详解/"/>
-
-
-
-
-
-  <title> SpringMVC详解 | Skiyubon's	Blog </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">index.home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Cache/">Cache</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JS/">JS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaWeb/">JavaWeb</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Security/">Security</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Tool/">Tool</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/软件架构/">软件架构</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">index.about</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Skiyubon's	Blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-sitemap">
-          <a href="/baidusitemap.xml" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
-            
-            站点地图
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocapitalize="off" autocomplete="off" autocorrect="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://skiyubon.github.io/2017/04/12/SpringMVC详解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WUZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/Koala.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Skiyubon's	Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                SpringMVC详解
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-12T19:50:14+08:00">
-                2017-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaWeb</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="index.search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="insight.hint" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
-      </header>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'insight.posts',
+            PAGES: 'insight.pages',
+            CATEGORIES: 'insight.categories',
+            TAGS: 'insight.tags',
+            UNTITLED: 'insight.untitled',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/JavaWeb/">JavaWeb</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-SpringMVC详解" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        SpringMVC详解
+        </h1>
     
 
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/04/12/SpringMVC详解/" class="article-date">
+            <time datetime="2017-04-12T11:50:14.000Z" itemprop="datePublished">2017-04-12</time>
+        </a>
+    </div>
 
-    <div class="post-body" itemprop="articleBody">
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/SpringMVC/">SpringMVC</a>
+    </div>
 
-      
-      
-
-      
-        <p><img src="/uploads/SpringMVC/DispacherServlet01.png" alt=""></p>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/uploads/SpringMVC/DispacherServlet01.png" alt=""></p>
 <a id="more"></a>
 <h1 id="SpringMVC-框架结构"><a href="#SpringMVC-框架结构" class="headerlink" title="SpringMVC 框架结构"></a>SpringMVC 框架结构</h1><p><img src="/uploads/SpringMVC/SpingMVC01.png" alt=""></p>
 <h1 id="SpringMVC-框架的默认的实现者"><a href="#SpringMVC-框架的默认的实现者" class="headerlink" title="SpringMVC 框架的默认的实现者"></a>SpringMVC 框架的默认的实现者</h1><p><img src="/uploads/SpringMVC/SpringMVC02.png" alt=""></p>
@@ -606,501 +345,403 @@
 </ul>
 <h3 id="LocaleChangeInterceptor：通过URL参数指定"><a href="#LocaleChangeInterceptor：通过URL参数指定" class="headerlink" title="LocaleChangeInterceptor：通过URL参数指定"></a>LocaleChangeInterceptor：通过URL参数指定</h3><p>很多国际型的网站都允许通过一个请求参数控制网站的本地化，如<br><a href="http://www.xxx.com" target="_blank" rel="noopener">www.xxx.com</a>? locale=zh_CN返回对应中国大陆的本地化网页，而<br><a href="http://www.xxx.com?locale=en返回本地化为英语的网页。" target="_blank" rel="noopener">www.xxx.com?locale=en返回本地化为英语的网页。</a><br>这样，网站使用者可以通过URL的控制返回不同本地化的页面，非常灵活。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"localeResolver"</span></span></span><br><span class="line"><span class="tag"><span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.i18n.CookieLocaleResolver"</span></span></span><br><span class="line"><span class="tag">		<span class="attr">p:cookieName</span>=<span class="string">"clientLanguage"</span></span></span><br><span class="line"><span class="tag">		<span class="attr">p:cookieMaxAge</span>=<span class="string">"100000"</span></span></span><br><span class="line"><span class="tag">		<span class="attr">p:cookiePath</span>=<span class="string">"/"</span></span></span><br><span class="line"><span class="tag">		<span class="attr">p:defaultLocale</span>=<span class="string">"zh_CN"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:interceptors</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.i18n.LocaleChangeInterceptor"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mvc:interceptors</span>&gt;</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/SpringMVC/" rel="tag"># SpringMVC</a>
-          
         </div>
-      
-
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/04/11/Lucene/" rel="next" title="Lucene">
-                <i class="fa fa-chevron-left"></i> Lucene
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/13/MyBatis/" rel="prev" title="MyBatis">
-                MyBatis <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
-    
-  </div>
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/Koala.jpg"
-               alt="WUZHOU" />
-          <p class="site-author-name" itemprop="name">WUZHOU</p>
-           
-              <p class="site-description motion-element" itemprop="description"></p>
-          
-        </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">19</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">8</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">15</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
+        <footer class="article-footer">
             
 
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringMVC-框架结构"><span class="nav-number">1.</span> <span class="nav-text">SpringMVC 框架结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringMVC-框架的默认的实现者"><span class="nav-number">2.</span> <span class="nav-text">SpringMVC 框架的默认的实现者</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP请求地址映射"><span class="nav-number">3.</span> <span class="nav-text">HTTP请求地址映射</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过URL限定：URL表达式"><span class="nav-number">3.1.</span> <span class="nav-text">通过URL限定：URL表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过URL限定：绑定-XXX-中的值"><span class="nav-number">3.2.</span> <span class="nav-text">通过URL限定：绑定{XXX}中的值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过请求方法限定：请求方法"><span class="nav-number">3.3.</span> <span class="nav-text">通过请求方法限定：请求方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过请求方法限定-模拟请求方法"><span class="nav-number">3.4.</span> <span class="nav-text">通过请求方法限定:模拟请求方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过请求-请求头参数限定-示例"><span class="nav-number">3.5.</span> <span class="nav-text">通过请求/请求头参数限定:示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过请求-请求头参数限定-更多"><span class="nav-number">3.6.</span> <span class="nav-text">通过请求/请求头参数限定:更多</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP请求数据的绑定"><span class="nav-number">4.</span> <span class="nav-text">HTTP请求数据的绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过注解绑定：示意图"><span class="nav-number">4.1.</span> <span class="nav-text">通过注解绑定：示意图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过注解绑定：示例"><span class="nav-number">4.2.</span> <span class="nav-text">通过注解绑定：示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用命令-表单对象绑定"><span class="nav-number">4.3.</span> <span class="nav-text">使用命令/表单对象绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Servlet-API对象作为入参"><span class="nav-number">4.4.</span> <span class="nav-text">使用Servlet API对象作为入参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Spring的Servlet-API代理类"><span class="nav-number">4.5.</span> <span class="nav-text">使用Spring的Servlet API代理类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用IO对象作为入参"><span class="nav-number">4.6.</span> <span class="nav-text">使用IO对象作为入参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他类型的参数"><span class="nav-number">4.7.</span> <span class="nav-text">其他类型的参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-RequestBody-ResponseBody"><span class="nav-number">4.8.</span> <span class="nav-text">使用@RequestBody/@ResponseBody</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用HttpEntity-ResponseEntity"><span class="nav-number">4.9.</span> <span class="nav-text">使用HttpEntity/ResponseEntity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用HttpEntity-ResponseEntity-1"><span class="nav-number">4.10.</span> <span class="nav-text">使用HttpEntity/ResponseEntity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出XML和JSON"><span class="nav-number">4.11.</span> <span class="nav-text">输出XML和JSON</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据转换、格式化、检验"><span class="nav-number">5.</span> <span class="nav-text">数据转换、格式化、检验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据绑定机理"><span class="nav-number">5.1.</span> <span class="nav-text">数据绑定机理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型转换"><span class="nav-number">5.2.</span> <span class="nav-text">数据类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PropertyEditor依然有效"><span class="nav-number">5.2.1.</span> <span class="nav-text">PropertyEditor依然有效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#强大的ConversionService"><span class="nav-number">5.2.2.</span> <span class="nav-text">强大的ConversionService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于ConversionService体系，定义自定义的类型转换器"><span class="nav-number">5.2.3.</span> <span class="nav-text">基于ConversionService体系，定义自定义的类型转换器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#格式化：带格式字符串内部对象-相互转换"><span class="nav-number">5.2.4.</span> <span class="nav-text">格式化：带格式字符串内部对象 相互转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用支持格式化的转换器"><span class="nav-number">5.2.5.</span> <span class="nav-text">使用支持格式化的转换器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据校验框架"><span class="nav-number">5.3.</span> <span class="nav-text">数据校验框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSR-303"><span class="nav-number">5.3.1.</span> <span class="nav-text">JSR 303</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据校验框架-1"><span class="nav-number">5.3.2.</span> <span class="nav-text">数据校验框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用注解驱动的校验"><span class="nav-number">5.3.3.</span> <span class="nav-text">如何使用注解驱动的校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用校验功能时，处理方法要如何签名？？"><span class="nav-number">5.3.4.</span> <span class="nav-text">使用校验功能时，处理方法要如何签名？？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#校验错误信息存放在什么地方？？"><span class="nav-number">5.4.</span> <span class="nav-text">校验错误信息存放在什么地方？？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页面如何显示错误信息"><span class="nav-number">5.5.</span> <span class="nav-text">页面如何显示错误信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据模型控制"><span class="nav-number">6.</span> <span class="nav-text">数据模型控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据模型访问结构"><span class="nav-number">6.1.</span> <span class="nav-text">数据模型访问结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问数据模型-ModelAndView"><span class="nav-number">6.2.</span> <span class="nav-text">访问数据模型:ModelAndView</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问数据模型：-ModelAttribute"><span class="nav-number">6.3.</span> <span class="nav-text">访问数据模型： @ModelAttribute</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问数据模型：-Map及Model"><span class="nav-number">6.4.</span> <span class="nav-text">访问数据模型： Map及Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问数据模型：-SessionAttributes"><span class="nav-number">6.5.</span> <span class="nav-text">访问数据模型： @SessionAttributes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一场由-SessionAttributes引发的血案"><span class="nav-number">6.6.</span> <span class="nav-text">一场由@SessionAttributes引发的血案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图及解析器"><span class="nav-number">7.</span> <span class="nav-text">视图及解析器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-MVC如何解析视图"><span class="nav-number">7.1.</span> <span class="nav-text">Spring MVC如何解析视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视图解析器类型"><span class="nav-number">7.2.</span> <span class="nav-text">视图解析器类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于协商的视图解析器"><span class="nav-number">7.3.</span> <span class="nav-text">基于协商的视图解析器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他"><span class="nav-number">8.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#静态资源处理"><span class="nav-number">8.1.</span> <span class="nav-text">静态资源处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态资源处理-使REST风格的URL成为实现"><span class="nav-number">8.1.1.</span> <span class="nav-text">静态资源处理:使REST风格的URL成为实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态资源处理-原理"><span class="nav-number">8.1.2.</span> <span class="nav-text">静态资源处理:原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态资源处理-如何配置？"><span class="nav-number">8.1.3.</span> <span class="nav-text">静态资源处理:如何配置？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理静态资源路径映射逻辑资源路径"><span class="nav-number">8.1.4.</span> <span class="nav-text">物理静态资源路径映射逻辑资源路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#允许利用浏览器的缓存且不担心不同步"><span class="nav-number">8.1.5.</span> <span class="nav-text">允许利用浏览器的缓存且不担心不同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地化"><span class="nav-number">8.2.</span> <span class="nav-text">本地化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#本地化原理"><span class="nav-number">8.2.1.</span> <span class="nav-text">本地化原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC本地化解析器"><span class="nav-number">8.2.2.</span> <span class="nav-text">SpringMVC本地化解析器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LocaleChangeInterceptor：通过URL参数指定"><span class="nav-number">8.2.3.</span> <span class="nav-text">LocaleChangeInterceptor：通过URL参数指定</span></a></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
 
 
-        
-      </div>
-    </main>
+    <a data-url="https://skiyubon.github.io/2017/04/12/SpringMVC详解/" data-id="cjfks587k001cdspr9r2mnkp7" class="article-share-link"><i class="fa fa-share"></i>article.share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">WUZHOU</span>
-</div>
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
 
+            if ($('#' + id).length) {
+                box = $('#' + id);
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
-  </a>
-</div>
+              box = $(html);
 
+              $('body').append(box);
+            }
 
-        
+            $('.article-share-box.on').hide();
 
-        
-      </div>
-    </footer>
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
 
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
 </script>
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-  
-  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    // Search DB path;
-    var search_path = "";
-    if (search_path.length == 0) {
-      search_path = "search.xml";
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.popup').toggle();
-    }
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-      $.ajax({
-        url: path,
-        dataType: "xml",
-        async: true,
-        success: function( xmlResponse ) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = $( "entry", xmlResponse ).map(function() {
-            return {
-              title: $( "title", this ).text(),
-              content: $("content",this).text(),
-              url: $( "url" , this).text()
-            };
-          }).get();
-          var $input = document.getElementById(search_id);
-          var $resultContent = document.getElementById(content_id);
-          $input.addEventListener('input', function(){
-            var matchcounts = 0;
-            var str='<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length > 1) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var content_index = [];
-                var data_title = data.title.trim().toLowerCase();
-                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
-                var data_url = decodeURIComponent(data.url);
-                var index_title = -1;
-                var index_content = -1;
-                var first_occur = -1;
-                // only match artiles with not empty titles and contents
-                if(data_title != '') {
-                  keywords.forEach(function(keyword, i) {
-                    index_title = data_title.indexOf(keyword);
-                    index_content = data_content.indexOf(keyword);
-                    if( index_title >= 0 || index_content >= 0 ){
-                      isMatch = true;
-                      if (i == 0) {
-                        first_occur = index_content;
-                      }
-                    }
-
-                  });
-                }
-                // show search results
-                if (isMatch) {
-                  matchcounts += 1;
-                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
-                  var content = data.content.trim().replace(/<[^>]+>/g,"");
-                  if (first_occur >= 0) {
-                    // cut out 100 characters
-                    var start = first_occur - 20;
-                    var end = first_occur + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if(start == 0){
-                      end = 50;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    var match_content = content.substring(start, end);
-                    // highlight all keywords
-                    keywords.forEach(function(keyword){
-                      var regS = new RegExp(keyword, "gi");
-                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
-                    });
-
-                    str += "<p class=\"search-result\">" + match_content +"...</p>"
-                  }
-                  str += "</li>";
-                }
-              })};
-            str += "</ul>";
-            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
-            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
-            $resultContent.innerHTML = str;
-          });
-          proceedsearch();
-        }
-      });}
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched == false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(function(e){
-      $('.popup').hide();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    });
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>sidebar.follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/04/13/MyBatis/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">sidebar.newer</strong>
+        <p class="article-nav-title">
+        
+            MyBatis
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/04/11/Lucene/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">sidebar.older</strong>
+        <p class="article-nav-title">Lucene</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">sidebar.recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/04/hello-world/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/04/hello-world/" class="title">Hello World</a></p>
+                            <p class="item-date"><time datetime="2018-04-04T03:05:49.209Z" itemprop="datePublished">2018-04-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/04/oop/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/04/oop/" class="title">oop</a></p>
+                            <p class="item-date"><time datetime="2018-04-04T01:48:06.000Z" itemprop="datePublished">2018-04-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/07/17/元数据驱动设计/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/07/17/元数据驱动设计/" class="title">元数据驱动设计</a></p>
+                            <p class="item-date"><time datetime="2017-07-17T02:15:07.000Z" itemprop="datePublished">2017-07-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/07/10/Spring-容器/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2017/07/10/Spring-容器/" class="title">Spring 容器</a></p>
+                            <p class="item-date"><time datetime="2017-07-10T08:14:04.000Z" itemprop="datePublished">2017-07-10</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/06/26/fastjson/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2017/06/26/fastjson/" class="title">fastjson</a></p>
+                            <p class="item-date"><time datetime="2017-06-26T03:49:07.000Z" itemprop="datePublished">2017-06-26</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">sidebar.categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cache/">Cache</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaWeb/">JavaWeb</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Security/">Security</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tool/">Tool</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/软件架构/">软件架构</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">sidebar.archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">sidebar.tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Analyzer/">Analyzer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java基础/">Java基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lucene/">Lucene</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOP/">OOP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shiro/">Shiro</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC/">SpringMVC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tool/">Tool</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fastjson/">fastjson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件架构/">软件架构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件设计/">软件设计</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">sidebar.tag_cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Analyzer/" style="font-size: 10px;">Analyzer</a> <a href="/tags/Java基础/" style="font-size: 10px;">Java基础</a> <a href="/tags/Lucene/" style="font-size: 20px;">Lucene</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shiro/" style="font-size: 10px;">Shiro</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringMVC/" style="font-size: 15px;">SpringMVC</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/fastjson/" style="font-size: 10px;">fastjson</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/软件架构/" style="font-size: 10px;">软件架构</a> <a href="/tags/软件设计/" style="font-size: 10px;">软件设计</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">sidebar.links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 WUZHOU</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://skiyubon.github.io/2017/04/12/SpringMVC详解/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
 </body>
 </html>
