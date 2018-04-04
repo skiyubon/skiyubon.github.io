@@ -1,0 +1,954 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Lucene," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Lucene:信息检索(IR)工具库，或者称为工具箱。信息检索指文档搜索，文档内信息搜索，或者文档相关的元数据搜索等操作。Lucene允许你向自己的应用程序中添加搜索功能，其并不关心数据来源、格式、甚至不关心数据的语种、只要能把它转为文本格式即可。（服务器上的网页，本地文件系统中的文档，Word文档，XML、HTML、PDF文档，或者其他能够从中提取文本信息的数据格式）">
+<meta name="keywords" content="Lucene">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lucene">
+<meta property="og:url" content="https://skiyubon.github.io/2017/04/11/Lucene/index.html">
+<meta property="og:site_name" content="Skiyubon&#39;s	Blog">
+<meta property="og:description" content="Lucene:信息检索(IR)工具库，或者称为工具箱。信息检索指文档搜索，文档内信息搜索，或者文档相关的元数据搜索等操作。Lucene允许你向自己的应用程序中添加搜索功能，其并不关心数据来源、格式、甚至不关心数据的语种、只要能把它转为文本格式即可。（服务器上的网页，本地文件系统中的文档，Word文档，XML、HTML、PDF文档，或者其他能够从中提取文本信息的数据格式）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://i.imgur.com/GXgwOH7.png">
+<meta property="og:image" content="https://skiyubon.github.io/uploads/QueryParser.png">
+<meta property="og:image" content="https://skiyubon.github.io/uploads/Image4.png">
+<meta property="og:updated_time" content="2017-04-12T11:36:54.702Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lucene">
+<meta name="twitter:description" content="Lucene:信息检索(IR)工具库，或者称为工具箱。信息检索指文档搜索，文档内信息搜索，或者文档相关的元数据搜索等操作。Lucene允许你向自己的应用程序中添加搜索功能，其并不关心数据来源、格式、甚至不关心数据的语种、只要能把它转为文本格式即可。（服务器上的网页，本地文件系统中的文档，Word文档，XML、HTML、PDF文档，或者其他能够从中提取文本信息的数据格式）">
+<meta name="twitter:image" content="http://i.imgur.com/GXgwOH7.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://skiyubon.github.io/2017/04/11/Lucene/"/>
+
+
+
+
+
+  <title> Lucene | Skiyubon's	Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Skiyubon's	Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/baidusitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://skiyubon.github.io/2017/04/11/Lucene/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WUZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/Koala.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Skiyubon's	Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Lucene
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-11T19:11:44+08:00">
+                2017-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Lucene:信息检索(IR)工具库，或者称为工具箱。信息检索指文档搜索，文档内信息搜索，或者文档相关的元数据搜索等操作。Lucene允许你向自己的应用程序中添加搜索功能，其并不关心数据来源、格式、甚至不关心数据的语种、只要能把它转为文本格式即可。（服务器上的网页，本地文件系统中的文档，Word文档，XML、HTML、PDF文档，或者其他能够从中提取文本信息的数据格式）</p>
+<a id="more"></a>
+<h1 id="1-初识Lucene"><a href="#1-初识Lucene" class="headerlink" title="1.初识Lucene"></a>1.初识Lucene</h1><h2 id="组件列表"><a href="#组件列表" class="headerlink" title="组件列表"></a>组件列表</h2><ol>
+<li>索引组件</li>
+<li>搜索组件</li>
+<li>搜索程序的其他模块（Lucene与应用程序进行整合）<ol>
+<li>管理界面</li>
+<li>分析界面</li>
+<li>搜索范围</li>
+</ol>
+</li>
+</ol>
+<h2 id="入门程序示例"><a href="#入门程序示例" class="headerlink" title="入门程序示例"></a>入门程序示例</h2><ol>
+<li>建立索引(核心类)<ol>
+<li>IndexWriter</li>
+<li>Directory</li>
+<li>Analyzer</li>
+<li>Doucment</li>
+<li>Field</li>
+</ol>
+</li>
+<li>搜索索引(核心类)<ol>
+<li>IndexSearch</li>
+<li>Term</li>
+<li>Query</li>
+<li>TermQuery</li>
+<li>TopDocs</li>
+</ol>
+</li>
+</ol>
+<h1 id="2-构建索引"><a href="#2-构建索引" class="headerlink" title="2.构建索引"></a>2.构建索引</h1><h2 id="2-1-基本索引操作（索引的CURD）"><a href="#2-1-基本索引操作（索引的CURD）" class="headerlink" title="2.1 基本索引操作（索引的CURD）"></a>2.1 基本索引操作（索引的CURD）</h2><h2 id="2-2-在索引过程中对文档和域进行加权操作"><a href="#2-2-在索引过程中对文档和域进行加权操作" class="headerlink" title="2.2 在索引过程中对文档和域进行加权操作"></a>2.2 在索引过程中对文档和域进行加权操作</h2><h2 id="2-3-对日期、数字和可排序域进行索引"><a href="#2-3-对日期、数字和可排序域进行索引" class="headerlink" title="2.3 对日期、数字和可排序域进行索引"></a>2.3 对日期、数字和可排序域进行索引</h2><h2 id="2-4-高级索引技术"><a href="#2-4-高级索引技术" class="headerlink" title="2.4 高级索引技术"></a>2.4 高级索引技术</h2><h1 id="3-搜索功能"><a href="#3-搜索功能" class="headerlink" title="3.搜索功能"></a>3.搜索功能</h1><h2 id="3-1-查询Lucene索引"><a href="#3-1-查询Lucene索引" class="headerlink" title="3.1 查询Lucene索引"></a>3.1 查询Lucene索引</h2><p><img src="http://i.imgur.com/GXgwOH7.png" alt=""></p>
+<h2 id="3-2-使用Lucene的多种内置查询"><a href="#3-2-使用Lucene的多种内置查询" class="headerlink" title="3.2 使用Lucene的多种内置查询"></a>3.2 使用Lucene的多种内置查询</h2><ol>
+<li>对特定项的搜索<br> <code>TermQuery</code></li>
+<li>解析用户输入的查询表达式：<br> <code>QueryParser</code><br><img src="/uploads/QueryParser.png" alt=""></li>
+</ol>
+<ul>
+<li>QueryParser 对象将用户输入的文本表达式用分词器转换成对应索引库中的分词形式，进一步构成复杂的查询，以提供给搜索模块。</li>
+<li>查询表达式与数据库中使用的SQL表达式类似，因为后者必须解析成数据库服务器马上理解的更低级别的元素。</li>
+<li>用QueryParser处理基本查询表达式：参见以下表达式以及它们转换后的形式。<br><img src="/uploads/Image4.png" alt=""></li>
+</ul>
+<h2 id="3-3-处理搜索结果"><a href="#3-3-处理搜索结果" class="headerlink" title="3.3 处理搜索结果"></a>3.3 处理搜索结果</h2><h2 id="3-4-Lucene的评分机制"><a href="#3-4-Lucene的评分机制" class="headerlink" title="3.4 Lucene的评分机制"></a>3.4 Lucene的评分机制</h2><h2 id="3-5-解析用户输入的查询表达式"><a href="#3-5-解析用户输入的查询表达式" class="headerlink" title="3.5 解析用户输入的查询表达式"></a>3.5 解析用户输入的查询表达式</h2><h1 id="4-分析过程"><a href="#4-分析过程" class="headerlink" title="4.分析过程"></a>4.分析过程</h1><h2 id="4-1-理解分析过程"><a href="#4-1-理解分析过程" class="headerlink" title="4.1 理解分析过程"></a>4.1 理解分析过程</h2><h2 id="4-2-Lucene的核心分析类"><a href="#4-2-Lucene的核心分析类" class="headerlink" title="4.2 Lucene的核心分析类"></a>4.2 Lucene的核心分析类</h2><h2 id="4-3-编写自定义分析器"><a href="#4-3-编写自定义分析器" class="headerlink" title="4.3 编写自定义分析器"></a>4.3 编写自定义分析器</h2><h2 id="4-4-处理非英语语种"><a href="#4-4-处理非英语语种" class="headerlink" title="4.4 处理非英语语种"></a>4.4 处理非英语语种</h2><h1 id="5-高级搜索技术"><a href="#5-高级搜索技术" class="headerlink" title="5.高级搜索技术"></a>5.高级搜索技术</h1><h2 id="5-1-为所有文档加载域值"><a href="#5-1-为所有文档加载域值" class="headerlink" title="5.1 为所有文档加载域值"></a>5.1 为所有文档加载域值</h2><h2 id="5-2-对搜索结果进行过滤和排序"><a href="#5-2-对搜索结果进行过滤和排序" class="headerlink" title="5.2 对搜索结果进行过滤和排序"></a>5.2 对搜索结果进行过滤和排序</h2><h2 id="5-3-跨度查询和功能查询"><a href="#5-3-跨度查询和功能查询" class="headerlink" title="5.3 跨度查询和功能查询"></a>5.3 跨度查询和功能查询</h2><h2 id="5-4-使用项向量"><a href="#5-4-使用项向量" class="headerlink" title="5.4 使用项向量"></a>5.4 使用项向量</h2><h2 id="5-5-停止较慢的搜索"><a href="#5-5-停止较慢的搜索" class="headerlink" title="5.5 停止较慢的搜索"></a>5.5 停止较慢的搜索</h2><h1 id="6-扩展搜索"><a href="#6-扩展搜索" class="headerlink" title="6.扩展搜索"></a>6.扩展搜索</h1><h2 id="6-1-创建自定义排序"><a href="#6-1-创建自定义排序" class="headerlink" title="6.1 创建自定义排序"></a>6.1 创建自定义排序</h2><h2 id="6-2-使用Collector"><a href="#6-2-使用Collector" class="headerlink" title="6.2 使用Collector"></a>6.2 使用Collector</h2><h2 id="6-3-自定义QueryParser"><a href="#6-3-自定义QueryParser" class="headerlink" title="6.3 自定义QueryParser"></a>6.3 自定义QueryParser</h2><h2 id="6-4-使用位置有效载荷"><a href="#6-4-使用位置有效载荷" class="headerlink" title="6.4 使用位置有效载荷"></a>6.4 使用位置有效载荷</h2><h1 id="7-下一回：Lucene应用的基本扩展、高级扩展、管理和性能调优、以及其他语言使用Lucene"><a href="#7-下一回：Lucene应用的基本扩展、高级扩展、管理和性能调优、以及其他语言使用Lucene" class="headerlink" title="7.下一回：Lucene应用的基本扩展、高级扩展、管理和性能调优、以及其他语言使用Lucene"></a>7.下一回：Lucene应用的基本扩展、高级扩展、管理和性能调优、以及其他语言使用Lucene</h1>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Lucene/" rel="tag"># Lucene</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/11/IKAnalyzer中文分词器/" rel="next" title="IKAnalyzer中文分词器">
+                <i class="fa fa-chevron-left"></i> IKAnalyzer中文分词器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/12/SpringMVC详解/" rel="prev" title="SpringMVC详解">
+                SpringMVC详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/Koala.jpg"
+               alt="WUZHOU" />
+          <p class="site-author-name" itemprop="name">WUZHOU</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-初识Lucene"><span class="nav-number">1.</span> <span class="nav-text">1.初识Lucene</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#组件列表"><span class="nav-number">1.1.</span> <span class="nav-text">组件列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#入门程序示例"><span class="nav-number">1.2.</span> <span class="nav-text">入门程序示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-构建索引"><span class="nav-number">2.</span> <span class="nav-text">2.构建索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-基本索引操作（索引的CURD）"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 基本索引操作（索引的CURD）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-在索引过程中对文档和域进行加权操作"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 在索引过程中对文档和域进行加权操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-对日期、数字和可排序域进行索引"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 对日期、数字和可排序域进行索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-高级索引技术"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 高级索引技术</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-搜索功能"><span class="nav-number">3.</span> <span class="nav-text">3.搜索功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-查询Lucene索引"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 查询Lucene索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-使用Lucene的多种内置查询"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 使用Lucene的多种内置查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-处理搜索结果"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 处理搜索结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-Lucene的评分机制"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 Lucene的评分机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-解析用户输入的查询表达式"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 解析用户输入的查询表达式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-分析过程"><span class="nav-number">4.</span> <span class="nav-text">4.分析过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-理解分析过程"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 理解分析过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Lucene的核心分析类"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 Lucene的核心分析类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-编写自定义分析器"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 编写自定义分析器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-处理非英语语种"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 处理非英语语种</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-高级搜索技术"><span class="nav-number">5.</span> <span class="nav-text">5.高级搜索技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-为所有文档加载域值"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 为所有文档加载域值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-对搜索结果进行过滤和排序"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 对搜索结果进行过滤和排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-跨度查询和功能查询"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 跨度查询和功能查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-使用项向量"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 使用项向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5-停止较慢的搜索"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 停止较慢的搜索</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-扩展搜索"><span class="nav-number">6.</span> <span class="nav-text">6.扩展搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-创建自定义排序"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 创建自定义排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-使用Collector"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 使用Collector</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-自定义QueryParser"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 自定义QueryParser</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-使用位置有效载荷"><span class="nav-number">6.4.</span> <span class="nav-text">6.4 使用位置有效载荷</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-下一回：Lucene应用的基本扩展、高级扩展、管理和性能调优、以及其他语言使用Lucene"><span class="nav-number">7.</span> <span class="nav-text">7.下一回：Lucene应用的基本扩展、高级扩展、管理和性能调优、以及其他语言使用Lucene</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WUZHOU</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

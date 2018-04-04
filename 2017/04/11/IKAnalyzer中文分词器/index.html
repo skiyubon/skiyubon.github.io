@@ -1,0 +1,1046 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Lucene,Analyzer," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="IK Analyzer 是一个开源的，基亍 java 语言开发的轻量级的中文分词工具包。从 2006年 12 月推出 1.0 版开始， IKAnalyzer 已经推出了 4 个大版本。最初，它是以开源项目Luence 为应用主体的，结合词典分词和文法分析算法的中文分词组件。 从 3.0 版本开始，IK 发展为面向 Java 的公用分词组件，独立亍 Lucene 项目，同时提供了对 Lucene 的">
+<meta name="keywords" content="Lucene,Analyzer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IKAnalyzer中文分词器">
+<meta property="og:url" content="https://skiyubon.github.io/2017/04/11/IKAnalyzer中文分词器/index.html">
+<meta property="og:site_name" content="Skiyubon&#39;s	Blog">
+<meta property="og:description" content="IK Analyzer 是一个开源的，基亍 java 语言开发的轻量级的中文分词工具包。从 2006年 12 月推出 1.0 版开始， IKAnalyzer 已经推出了 4 个大版本。最初，它是以开源项目Luence 为应用主体的，结合词典分词和文法分析算法的中文分词组件。 从 3.0 版本开始，IK 发展为面向 Java 的公用分词组件，独立亍 Lucene 项目，同时提供了对 Lucene 的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://i.imgur.com/eNMm0eF.png">
+<meta property="og:image" content="http://i.imgur.com/CgtDIgZ.png">
+<meta property="og:updated_time" content="2017-04-11T09:53:01.993Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IKAnalyzer中文分词器">
+<meta name="twitter:description" content="IK Analyzer 是一个开源的，基亍 java 语言开发的轻量级的中文分词工具包。从 2006年 12 月推出 1.0 版开始， IKAnalyzer 已经推出了 4 个大版本。最初，它是以开源项目Luence 为应用主体的，结合词典分词和文法分析算法的中文分词组件。 从 3.0 版本开始，IK 发展为面向 Java 的公用分词组件，独立亍 Lucene 项目，同时提供了对 Lucene 的">
+<meta name="twitter:image" content="http://i.imgur.com/eNMm0eF.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://skiyubon.github.io/2017/04/11/IKAnalyzer中文分词器/"/>
+
+
+
+
+
+  <title> IKAnalyzer中文分词器 | Skiyubon's	Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Skiyubon's	Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/baidusitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://skiyubon.github.io/2017/04/11/IKAnalyzer中文分词器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WUZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/Koala.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Skiyubon's	Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                IKAnalyzer中文分词器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-11T17:10:20+08:00">
+                2017-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>IK Analyzer 是一个开源的，基亍 java 语言开发的轻量级的中文分词工具包。从 2006年 12 月推出 1.0 版开始， IKAnalyzer 已经推出了 4 个大版本。最初，它是以开源项目Luence 为应用主体的，结合词典分词和文法分析算法的中文分词组件。 从 3.0 版本开始，IK 发展为面向 Java 的公用分词组件，独立亍 Lucene 项目，同时提供了对 Lucene 的默认优化实现。 在 2012 版本中，IK 实现了简单的分词歧义排除算法，标志着 IK 分词器从单纯的词典分词向模拟语义分词衍化。</p>
+<a id="more"></a>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><h2 id="IK-Analyzer-2012-结构设计"><a href="#IK-Analyzer-2012-结构设计" class="headerlink" title="IK Analyzer 2012 结构设计"></a>IK Analyzer 2012 结构设计</h2><p><img src="http://i.imgur.com/eNMm0eF.png" alt=""></p>
+<h2 id="IK-Analyzer-2012-特性"><a href="#IK-Analyzer-2012-特性" class="headerlink" title="IK Analyzer 2012 特性"></a>IK Analyzer 2012 特性</h2><ul>
+<li>采用了特有的“ 正向迭代最细粒度切分算法“ ，支持细粒度和智能分词两种切分模式；</li>
+</ul>
+<ul>
+<li>在系统环境：Core2 i7 3.4G 双核，4G 内存，window 7 64 位， Sun JDK 1.6_29 64<br>位 普通 pc 环境测试，IK2012 具有 160 万字/秒（3000KB/S）的高速处理能力。</li>
+</ul>
+<ul>
+<li>2012 版本的智能分词模式支持简单的分词排歧义处理和数量词合并输出。</li>
+</ul>
+<ul>
+<li>采用了多子处理器分析模式，支持：英文字母、数字、中文词汇等分词处理，兼容韩文、<br>日文字符</li>
+</ul>
+<ul>
+<li>优化的词典存储，更小的内存占用。支持用户词典扩展定义。特别的，在 2012 版本，<br>词典支持中文，英文，数字混合词语。</li>
+</ul>
+<h2 id="分词效果示例"><a href="#分词效果示例" class="headerlink" title="分词效果示例"></a>分词效果示例</h2><p>IK Analyzer 2012 版本支持 细粒度切分 和 智能切分，以下是两种切分方式的演示样例。</p>
+<ol>
+<li>文本原文 1:<br>IKAnalyzer 是一个开源的，基亍 java 语言开发的轻量级的中文分词工具包。从 2006 年 12<br>月推出 1.0 版开始， IKAnalyzer 已经推出了 3 个大版本。</li>
+</ol>
+<ul>
+<li>智能分词结果:<br>ikanalyzer | 是 | 一个 | 开源 | 的 | 基亍 | java | 语言 | 开发 | 的 | 轻量级 | 的 | 中<br>文 | 分词 | 工具包 | 从 | 2006年 | 12月 | 推出 | 1.0版 | 开始 | ikanalyzer | 已经 | 推<br>| 出了 | 3个 | 大 | 版本</li>
+</ul>
+<ul>
+<li>最细粒度分词结果:<br>ikanalyzer | 是 | 一个 | 一 | 个 | 开源 | 的 | 基亍 | java | 语言 | 开发 | 的 | 轻量级| 量级 | 的 | 中文 | 分词 | 工具包 | 工具 | 包 | 从 | 2006 | 年 | 12 | 月 | 推出 | 1.0 |<br>版 | 开始 | ikanalyzer | 已经 | 推出 | 出了 | 3 | 个 | 大 | 版本</li>
+</ul>
+<ol start="2">
+<li>文本原文 2:<br>张三说的确实在理</li>
+</ol>
+<ul>
+<li><p>智能分词结果:<br>张三 | 说的 | 确实 | 在理</p>
+</li>
+<li><p>最细粒度分词结果:<br>张三 | 三 | 说的 | 的确 | 的 | 确实 | 实在 | 在理</p>
+</li>
+</ul>
+<ol start="3">
+<li>文本原文 3<br>公路局正在治理解放大道路面积水问题</li>
+</ol>
+<ul>
+<li>智能分词结果:<br>公路局 | 正在 | 治理 | 解放 | 大道 | 路面 | 积水 | 问题</li>
+</ul>
+<ul>
+<li>最细粒度分词结果:<br>公路局 | 公路 | 路局 | 正在 | 治理 | 理解 | 解放 | 放大 | 大道 | 道路 | 路面 | 面积<br>| 积水 | 问题</li>
+</ul>
+<ol start="4">
+<li>文本原文 4<br>据路透社报道，印度尼西亚社会事务部一官员星期二(29 日)表示，日惹市附近当地时间 27<br>日晨 5 时 53 分发生的里氏 6.2 级地震已经造成至少 5427 人死亡，20000 余人受伤，近 20<br>万人无家可归。</li>
+</ol>
+<ul>
+<li>智能分词结果:<br>据 | 路透社 | 报道 | 印度尼西亚 | 社会 | 事务部 | 一 | 官员 | 星期二 | 29 日 | 表示 |<br>日 | 惹 | 市 | 附近 | 当地时间 | 27 日 | 晨 | 5 时 | 53 分 | 发生 | 的 | 里氏 | 6.2 级 |地震 | 已经 | 造成 | 至少 | 5427 人 | 死亡 | 20000 | 余人 | 受伤 | 近 | 20 | 万人 |<br>无家可归</li>
+</ul>
+<ul>
+<li>最细粒度分词结果:<br>据 | 路透社 | 路透 | 社 | 报道 | 印度尼西亚 | 印度 | 尼 | 西亚 | 社会事务 | 社会 |<br>事务部 | 事务 | 部 | 一 | 官员 | 星期二 | 星期 | 二 | 29 | 日 | 表示 | 日 | 惹 | 市 |<br>附近 | 当地时间 | 当地 | 时间 | 27 | 日 | 晨 | 5 | 时 | 53 | 分发 | 分 | 发生 | 发 | 生<br>| 的 | 里氏 | 6.2 | 级 | 地震 | 已经 | 造成 | 至少 | 5427 | 人 | 死亡 | 20000 | 余人 |<br>受伤 | 近 | 20 | 万人 | 万 | 人 | 无家可归</li>
+</ul>
+<h1 id="使用指南"><a href="#使用指南" class="headerlink" title="使用指南"></a>使用指南</h1><h2 id="下载地址："><a href="#下载地址：" class="headerlink" title="下载地址："></a>下载地址：</h2><p>GoogleCode 开源项目 ：<a href="http://code.google.com/p/ik-analyzer/" target="_blank" rel="noopener">http://code.google.com/p/ik-analyzer/</a><br>GoogleCode 下载：<a href="http://code.google.com/p/ik-analyzer/downloads/list" target="_blank" rel="noopener">http://code.google.com/p/ik-analyzer/downloads/list</a></p>
+<h2 id="与相关项目的版本兼容"><a href="#与相关项目的版本兼容" class="headerlink" title="与相关项目的版本兼容"></a>与相关项目的版本兼容</h2><p><img src="http://i.imgur.com/CgtDIgZ.png" alt=""></p>
+<h2 id="IK-Analyzer安装包："><a href="#IK-Analyzer安装包：" class="headerlink" title="IK Analyzer安装包："></a>IK Analyzer安装包：</h2><ol>
+<li>《 IKAnalyzer 中文分词器 V2012 使用手册》（即本文档）</li>
+<li>IKAnalyzer2012.jar（主 jar 包）</li>
+<li>IKAnalyzer.cfg.xml（分词器扩展配置文件）</li>
+<li>stopword.dic（停止词典）</li>
+<li>LICENSE.TXT ; NOTICE.TXT （apache 版权申明）<br>它 的 安 装 部 署 十 分 简 单 ， 将 IKAnalyzer2012.jar 部 署 亍 项 目 的 lib 目 彔 中 ；<br>IKAnalyzer.cfg.xml 不 stopword.dic 文件放置在 class 根目彔（对亍 web 项目，通常是<br>WEB-INF/classes 目彔，同 hibernate、 log4j 等配置文件相同）下即可。</li>
+</ol>
+<h2 id="Lucene用户快速入门"><a href="#Lucene用户快速入门" class="headerlink" title="Lucene用户快速入门"></a>Lucene用户快速入门</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">/</span><br><span class="line">* IKAnalyzer 示例</span><br><span class="line">* <span class="number">2012</span>-<span class="number">3</span>-<span class="number">2</span></span><br><span class="line">*</span><br><span class="line">* 以下是结合Lucene3.4 API的写法</span><br><span class="line">*</span><br><span class="line">*/</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IKAnalyzerDemo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		<span class="comment">//Lucene Document的域名</span></span><br><span class="line">		String fieldName = <span class="string">"text"</span>;</span><br><span class="line">		<span class="comment">//检索内容</span></span><br><span class="line">		String text = <span class="string">"IK Analyzer是一个结合词典分词和文法分词的中文分词开源工</span></span><br><span class="line"><span class="string">		具包。它使用了全新的正向迭代最细粒度切分算法。 "</span>;</span><br><span class="line">		<span class="comment">//实例化IKAnalyzer分词器</span></span><br><span class="line">		Analyzer analyzer = <span class="keyword">new</span> IKAnalyzer();</span><br><span class="line">		Directory directory = <span class="keyword">null</span>;</span><br><span class="line">		IndexWriter iwriter = <span class="keyword">null</span>;</span><br><span class="line">		IndexReader ireader = <span class="keyword">null</span>;</span><br><span class="line">		IndexSearcher isearcher = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">//建立内存索引对象</span></span><br><span class="line">			directory = <span class="keyword">new</span> RAMDirectory();</span><br><span class="line">			<span class="comment">//配置IndexWriterConfig</span></span><br><span class="line">			IndexWriterConfig iwConfig = <span class="keyword">new</span></span><br><span class="line">			IndexWriterConfig(Version.LUCENE_34 , analyzer);</span><br><span class="line">			iwConfig.setOpenMode(OpenMode.CREATE_OR_APPEND);</span><br><span class="line">			iwriter = <span class="keyword">new</span> IndexWriter(directory , iwConfig);</span><br><span class="line">			<span class="comment">//写入索引</span></span><br><span class="line">			Document doc = <span class="keyword">new</span> Document();</span><br><span class="line">			doc.add(<span class="keyword">new</span> Field(<span class="string">"ID"</span>, <span class="string">"10000"</span>, Field.Store.YES,</span><br><span class="line">			Field.Index.NOT_ANALYZED));</span><br><span class="line">			doc.add(<span class="keyword">new</span> Field(fieldName, text, Field.Store.YES,</span><br><span class="line">			Field.Index.ANALYZED));</span><br><span class="line">			iwriter.addDocument(doc);</span><br><span class="line">			iwriter.close();</span><br><span class="line">			<span class="comment">//搜索过程**********************************</span></span><br><span class="line">			<span class="comment">//实例化搜索器</span></span><br><span class="line">			ireader = IndexReader.open(directory);isearcher = <span class="keyword">new</span> IndexSearcher(ireader);</span><br><span class="line">			String keyword = <span class="string">"中文分词工具包"</span>;</span><br><span class="line">			<span class="comment">//使用QueryParser查询分析器构造Query对象</span></span><br><span class="line">			QueryParser qp = <span class="keyword">new</span> QueryParser(Version.LUCENE_34,</span><br><span class="line">			fieldName, analyzer);</span><br><span class="line">			qp.setDefaultOperator(QueryParser.AND_OPERATOR);</span><br><span class="line">			Query query = qp.parse(keyword);</span><br><span class="line">			<span class="comment">//搜索相似度最高的5条记录</span></span><br><span class="line">			TopDocs topDocs = isearcher.search(query , <span class="number">5</span>);</span><br><span class="line">			System.out.println(<span class="string">"命中： "</span> + topDocs.totalHits);</span><br><span class="line">			<span class="comment">//输出结果</span></span><br><span class="line">			ScoreDoc[] scoreDocs = topDocs.scoreDocs;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; topDocs.totalHits; i++)&#123;</span><br><span class="line">				Document targetDoc = isearcher.doc(scoreDocs[i].doc);</span><br><span class="line">				System.out.println(<span class="string">"内容： "</span> + targetDoc.toString());</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (CorruptIndexException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (LockObtainFailedException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(ireader != <span class="keyword">null</span>)&#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					ireader.close();</span><br><span class="line">				&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span>(directory != <span class="keyword">null</span>)&#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					directory.close();</span><br><span class="line">				&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	执行结果：</span></span><br><span class="line"><span class="comment">	命中： 1</span></span><br><span class="line"><span class="comment">	内容： Document&lt;stored/uncompressed,indexed,tokenized&lt;text:IK Analyzer是</span></span><br><span class="line"><span class="comment">	一个结合词典分词和文法分词的中文分词开源工具包。它使用了全新的正向迭代最细粒度切分算</span></span><br><span class="line"><span class="comment">	法。 &gt;&gt;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="关键-API-说明"><a href="#关键-API-说明" class="headerlink" title="关键 API 说明"></a>关键 API 说明</h2><p>（注：本文档只列出常用的、 主要的 API 说明，有可能因为版本变更而不实际代码产生丌<br>一致情冴，因此最准确的说明请参看 Java API DOC）</p>
+<h3 id="类-org-wltea-analyzer-lucene-IKAnalyzer"><a href="#类-org-wltea-analyzer-lucene-IKAnalyzer" class="headerlink" title="类 org.wltea.analyzer.lucene.IKAnalyzer"></a>类 org.wltea.analyzer.lucene.IKAnalyzer</h3><p>说明：IK 分词器的主类，是 IK 分词器的 Lucene Analyzer 类实现。<br>该类使用方法请参考 “代码样例”章节</p>
+<ul>
+<li>public IKAnalyzer()<br>说明：构造函数，默认实现最细粒度切分算法</li>
+</ul>
+<ul>
+<li>public IKAnalyzer(boolean useSmart)<br>说明：构造函数<br>参数 1 ：boolean useSmart， 当为 true 时，分词器采用智能切分 ；当为 false<br>时，分词器迚行最细粒度切分。<br>类 org.wltea.analyzer.core.IKSegmenter<br>说明： 这是 IK 分词器的核心类。它是独立亍 Lucene 的 Java 分词器实现。当您需要在 Lucene 以外的环境中单独使用 IK 中文分词 组件时，IKSegmenter 正是您要找的。</li>
+</ul>
+<ul>
+<li>public IKSegmenter(Reader input , boolean useSmart)<br>说明：IK 主分词器构造函数<br>参数 1：Reader input , 字符输入读取<br>参数 2 : boolean useSmart , 是否采用智能切分策略。 true 使用智能切分，false 使用<br>最细粒度切分。</li>
+</ul>
+<ul>
+<li>public IKSegmentation(Reader input , Configuration cfg)<br>说明：IK 主分词器新构造函数<br>参数 1：Reader input , 字符输入读取<br>参数 2：Configuration cfg , 分词器配置。用户可以定制自己的 Configuration 类，<br>来改变词典配置。</li>
+</ul>
+<ul>
+<li>public synchronized Lexeme next()throws IOException<br>说明：读取分词器切分出的下一个语义单元，如果返回 null，表示分词器已经结束。<br>返回值：Lexeme 语义单元对象，即相当亍 Lucene 的词元对象 Token<h3 id="类-org-wltea-analyzer-core-Lexeme"><a href="#类-org-wltea-analyzer-core-Lexeme" class="headerlink" title="类 org.wltea.analyzer.core.Lexeme"></a>类 org.wltea.analyzer.core.Lexeme</h3>说明： 这是 IK 分词器的语义单元对象，相当亍 Lucene 中的 Token 词元对象。 由亍<br>IK 被设计为独立亍 Lucene 的 Java 分词器实现，因此它需要 Lexeme 来代表分词的结<br>果。</li>
+</ul>
+<ul>
+<li>public int getBeginPosition()<br>说明：获取语义单元的起始字符在文本中的位置返回值：int ， 语义单元相对亍文本的绝对起始位置</li>
+</ul>
+<ul>
+<li>public int getEndPosition()<br>说明：获取语义单元的结束字符的下一个位置<br>返回值：int ， 语义单元相对亍文本的绝对终止位置的下一个字符位置</li>
+</ul>
+<ul>
+<li>public int getLength()<br>说明：获取语义单元包含字符串的长度<br>返回值：int ， 语义单元长度 = getEndPosition – getBeginPosition</li>
+</ul>
+<ul>
+<li>public String getLexemeText()<br>说明：获取语义单元包含字符串内容<br>返回值：String， 语义单元的实际内容，即分词的结果</li>
+</ul>
+<h3 id="IKQueryPaser-与-IK-简单搜索表达式说明"><a href="#IKQueryPaser-与-IK-简单搜索表达式说明" class="headerlink" title="IKQueryPaser 与 IK 简单搜索表达式说明"></a>IKQueryPaser 与 IK 简单搜索表达式说明</h3><p>在 IK2012 版本乊前，由亍分词器没有处理歧义分词的能力，才使用了 IKQueryParser<br>来解决搜索时的歧义冲突问题。随着 2012 版本的推出，用户已经丌 再需要使用<br>IKQueryParser 来解决这样的问题。直接使用 Lucene 的 QueryParser 即可。</p>
+<h2 id="词表扩展"><a href="#词表扩展" class="headerlink" title="词表扩展"></a>词表扩展</h2><p>目前， IK 分词器自带的主词典拥有 27 万左右的汉语单词量。由亍作者个人的精力有限，<br>并没有对搜集到的词库迚行全范围的筛选、清理。此外，对亍分词组件应用场景所涉及的领<br>域的丌同，也需要各类与业词库的支持。为此，IK 分词器提供了对词典的扩展支持。<br>在 IK 分词器 3.1.3 以上版本，同时提供了对用户自定义的停止词（过滤词）的扩展支<br>持。</p>
+<h3 id="基于-API-的词典扩充"><a href="#基于-API-的词典扩充" class="headerlink" title="基于 API 的词典扩充"></a>基于 API 的词典扩充</h3><p>IK 分词器支持使用 API 编程模型扩充您的词典和停止词典。如果您的个性化词典是存<br>储亍数据库中，这个方式应该对您适用。 API 如下：</p>
+<h4 id="类-org-wltea-analyzer-dic-Dictionary"><a href="#类-org-wltea-analyzer-dic-Dictionary" class="headerlink" title="类 org.wltea.analyzer.dic.Dictionary"></a>类 org.wltea.analyzer.dic.Dictionary</h4><p>说明： IK 分词器的词典对象。它负责中文词汇的加载，内存管理和匹配检索。</p>
+<ul>
+<li>public static Dictionary initial(Configuration cfg)<br>说明：初始化字典实例。字典采用单例模式，一旦初始化，实例就固定.<br>PS:注意该方法只能调用一次。<br>参数 1：Configuration cfg ， 词典路径配置<br>返回值：Dictionary IK 词典单例</li>
+</ul>
+<ul>
+<li>public static Dictionary getSingleton()<br>说明：获取初始化完毕的字典单例<br>返回值：Dictionary IK 词典单例</li>
+</ul>
+<ul>
+<li>public void addWords(Collection<string> words)<br>说明：加载用户扩展的词汇列表到 IK 的主词典中，增加分词器的可识别词语。<br>参数 1：Collection<string> words ， 扩展的词汇列表<br>返回值：无</string></string></li>
+</ul>
+<ul>
+<li>public void disableWords(Collection<string> words)<br>说明：屏蔽词典中的词元<br>参数 1：Collection<string> words， 待删除的词列表<br>返回值：无</string></string></li>
+</ul>
+<h3 id="基于配置的词典扩充"><a href="#基于配置的词典扩充" class="headerlink" title="基于配置的词典扩充"></a>基于配置的词典扩充</h3><p>IK 分词器还支持通过配置 IKAnalyzer.cfg.xml 文件来扩充您的与有词典以及停止词典<br>（过滤词典） 。</p>
+<ol>
+<li>部署 IKAnalyzer.cfg.xml<br>IKAnalyzer.cfg.xml 部 署 在 代 码 根 目 彔 下 （ 对 亍 web 项 目 ， 通 常 是<br>WEB-INF/classes 目彔）同 hibernate、 log4j 等配置文件相同。</li>
+<li>词典文件的编辑不部署<br>分词器的词典文件格式是无 BOM 的 UTF-8 编码的中文文本文件，文件扩展名丌<br>限。词典中，每个中文词汇独立占一行，使用\r\n 的 DOS 方式换行。（注，如果您丌<br>了解什么是无 BOM 的 UTF-8 格式， 请保证您的词典使用 UTF-8 存储，并在文件的<br>头部添加一空行）。您可以参考分词器源码 org.wltea.analyzer.dic 包下的.dic 文件。<br>词典文件应部署在 Java 的资源路径下，即 ClassLoader 能够加载的路径中。（推<br>荐同 IKAnalyzer.cfg.xml 放在一起）</li>
+<li>IKAnalyzer.cfg.xml 文件的配置<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comment</span>&gt;</span>IK Analyzer 扩展配置<span class="tag">&lt;/<span class="name">comment</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--用户可以在这里配置自己的扩展字典 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">"ext_dict"</span>&gt;</span>/mydict.dic;</span><br><span class="line">/com/mycompany/dic/mydict2.dic;<span class="tag">&lt;/<span class="name">entry</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--用户可以在这里配置自己的扩展停止词字典--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">"ext_stopwords"</span>&gt;</span>/ext_stopword.dic<span class="tag">&lt;/<span class="name">entry</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在配置文件中，用户可一次配置多个词典文件。文件名使用“ ;”号分隔。文件路径为<br>相对 java 包的起始根路径。</p>
+<h3 id="使用自定义的-Configuration-类改变词典配置"><a href="#使用自定义的-Configuration-类改变词典配置" class="headerlink" title="使用自定义的 Configuration 类改变词典配置"></a>使用自定义的 Configuration 类改变词典配置</h3><p>IK 分词器使用 org.wltea.analyzer.cfg.Configuration 接口来提供扩展字典的配置信<br>息，在特定情冴下，用户可以根据需要，实现该接口类，定制自己的字典配置。 以下是接口<br>方法说明：</p>
+<h4 id="类-org-wltea-analyzer-cfg-Configuration"><a href="#类-org-wltea-analyzer-cfg-Configuration" class="headerlink" title="类 org.wltea.analyzer.cfg.Configuration"></a>类 org.wltea.analyzer.cfg.Configuration</h4><ul>
+<li>public String getMainDictionary()<br>说明：获取主字典路径，注意该路径是相对不当前系统类加载器 ClassLoader 的<br>路径。<br>返回值：主字典路径字符串</li>
+</ul>
+<ul>
+<li>public String getQuantifierDicionary ()<br>说明：获取量词字典路径，注意该路径是相对不当前系统类加载器 ClassLoader<br>的路径。<br>返回值：量词典路径字符串</li>
+</ul>
+<ul>
+<li>public List<string> getExtDictionarys() ()<br>说明：获取扩展字典路径列表，可一次返回多个扩展词典。 注意该路径是相对不当<br>前系统类加载器 ClassLoader 的路径。<br>返回值：扩展典路径字符串列表</string></li>
+</ul>
+<ul>
+<li>public List<string> getExtStopWordDictionarys () ()<br>说明：获取停止词（stopword）字典路径列表，可一次返回多个停止词词典。 注<br>意该路径是相对不当前系统类加载器 ClassLoader 的路径。<br>返回值：停止词词典路径字符串列表<h3 id="针对-solr-的分词器应用扩展"><a href="#针对-solr-的分词器应用扩展" class="headerlink" title="针对 solr 的分词器应用扩展"></a>针对 solr 的分词器应用扩展</h3>这里特别的罗嗦几句，在 Solr4.0 发布以后，官方取消了 BaseTokenizerFactory 接口，<br>而直接使用 Lucene Analyzer 标准接口。因此 IK 分词器 2012 FF 版本也取消了<br>org.wltea.analyzer.solr.IKTokenizerFactory 类。<h4 id="solr4-0-配置样例"><a href="#solr4-0-配置样例" class="headerlink" title="solr4.0 配置样例"></a>solr4.0 配置样例</h4>使用 IKAnalyzer 的配置<br><schema name="example" version="1.1"><br>……<br><fieldtype name="text" class="solr.TextField"><br><analyzer class="org.wltea.analyzer.lucene.IKAnalyzer"><br></analyzer></fieldtype><br>……<br></schema><br>更多的 solr4.0 配置方式，请参考 solr4.0 相关文档。链接地址：<br><a href="http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters" target="_blank" rel="noopener">http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters</a></string></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Lucene/" rel="tag"># Lucene</a>
+          
+            <a href="/tags/Analyzer/" rel="tag"># Analyzer</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/11/搜索/" rel="next" title="搜索以及Lucene">
+                <i class="fa fa-chevron-left"></i> 搜索以及Lucene
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/11/Lucene/" rel="prev" title="Lucene">
+                Lucene <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/Koala.jpg"
+               alt="WUZHOU" />
+          <p class="site-author-name" itemprop="name">WUZHOU</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IK-Analyzer-2012-结构设计"><span class="nav-number">1.1.</span> <span class="nav-text">IK Analyzer 2012 结构设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IK-Analyzer-2012-特性"><span class="nav-number">1.2.</span> <span class="nav-text">IK Analyzer 2012 特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分词效果示例"><span class="nav-number">1.3.</span> <span class="nav-text">分词效果示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用指南"><span class="nav-number">2.</span> <span class="nav-text">使用指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载地址："><span class="nav-number">2.1.</span> <span class="nav-text">下载地址：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与相关项目的版本兼容"><span class="nav-number">2.2.</span> <span class="nav-text">与相关项目的版本兼容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IK-Analyzer安装包："><span class="nav-number">2.3.</span> <span class="nav-text">IK Analyzer安装包：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lucene用户快速入门"><span class="nav-number">2.4.</span> <span class="nav-text">Lucene用户快速入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键-API-说明"><span class="nav-number">2.5.</span> <span class="nav-text">关键 API 说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类-org-wltea-analyzer-lucene-IKAnalyzer"><span class="nav-number">2.5.1.</span> <span class="nav-text">类 org.wltea.analyzer.lucene.IKAnalyzer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类-org-wltea-analyzer-core-Lexeme"><span class="nav-number">2.5.2.</span> <span class="nav-text">类 org.wltea.analyzer.core.Lexeme</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IKQueryPaser-与-IK-简单搜索表达式说明"><span class="nav-number">2.5.3.</span> <span class="nav-text">IKQueryPaser 与 IK 简单搜索表达式说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#词表扩展"><span class="nav-number">2.6.</span> <span class="nav-text">词表扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于-API-的词典扩充"><span class="nav-number">2.6.1.</span> <span class="nav-text">基于 API 的词典扩充</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类-org-wltea-analyzer-dic-Dictionary"><span class="nav-number">2.6.1.1.</span> <span class="nav-text">类 org.wltea.analyzer.dic.Dictionary</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于配置的词典扩充"><span class="nav-number">2.6.2.</span> <span class="nav-text">基于配置的词典扩充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用自定义的-Configuration-类改变词典配置"><span class="nav-number">2.6.3.</span> <span class="nav-text">使用自定义的 Configuration 类改变词典配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类-org-wltea-analyzer-cfg-Configuration"><span class="nav-number">2.6.3.1.</span> <span class="nav-text">类 org.wltea.analyzer.cfg.Configuration</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#针对-solr-的分词器应用扩展"><span class="nav-number">2.6.4.</span> <span class="nav-text">针对 solr 的分词器应用扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#solr4-0-配置样例"><span class="nav-number">2.6.4.1.</span> <span class="nav-text">solr4.0 配置样例</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WUZHOU</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

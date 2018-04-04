@@ -1,0 +1,877 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Tool," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：允许用户从NPM服务器下载别人编写的第三方包到本地使用。允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。由于新版的nodejs已经集成了npm，所以之前npm也一并安装好了。同样可以通过输入 “npm -v”">
+<meta name="keywords" content="Tool">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NPM 使用介绍">
+<meta property="og:url" content="https://skiyubon.github.io/2017/04/10/npm01/index.html">
+<meta property="og:site_name" content="Skiyubon&#39;s	Blog">
+<meta property="og:description" content="NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：允许用户从NPM服务器下载别人编写的第三方包到本地使用。允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。由于新版的nodejs已经集成了npm，所以之前npm也一并安装好了。同样可以通过输入 “npm -v”">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-04-11T09:58:18.724Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NPM 使用介绍">
+<meta name="twitter:description" content="NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：允许用户从NPM服务器下载别人编写的第三方包到本地使用。允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。由于新版的nodejs已经集成了npm，所以之前npm也一并安装好了。同样可以通过输入 “npm -v”">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://skiyubon.github.io/2017/04/10/npm01/"/>
+
+
+
+
+
+  <title> NPM 使用介绍 | Skiyubon's	Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Skiyubon's	Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/baidusitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://skiyubon.github.io/2017/04/10/npm01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WUZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/Koala.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Skiyubon's	Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                NPM 使用介绍
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-10T23:38:28+08:00">
+                2017-04-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：<br>允许用户从NPM服务器下载别人编写的第三方包到本地使用。<br>允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。<br>允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。<br>由于新版的nodejs已经集成了npm，所以之前npm也一并安装好了。同样可以通过输入 “npm -v” 来测试是否成功安装。命令如下，出现版本提示表示安装成功:<br>$ npm -v<br>2.3.0<br>如果你安装的是旧版本的 npm，可以很容易得通过 npm 命令来升级，命令如下：<br>$ sudo npm install npm -g<br>/usr/local/bin/npm -&gt; /usr/local/lib/node_modules/npm/bin/npm-cli.js<br><a href="mailto:npm@2.14.2" target="_blank" rel="noopener">npm@2.14.2</a> /usr/local/lib/node_modules/npm<br>如果是 Window 系统使用以下命令即可：<br>npm install npm -g<br>使用淘宝镜像的命令：<br>cnpm install npm -g<br>使用 npm 命令安装模块<br>npm 安装 Node.js 模块语法格式如下：<br>$ npm install <module name=""><br>以下实例，我们使用 npm 命令安装常用的 Node.js web框架模块 express:<br>$ npm install express<br>安装好之后，express 包就放在了工程目录下的 node_modules 目录中，因此在代码中只需要通过 require(‘express’) 的方式就好，无需指定第三方包路径。<br>var express = require(‘express’);<br>全局安装与本地安装<br>npm 的包安装分为本地安装（local）、全局安装（global）两种，从敲的命令行来看，差别只是有没有-g而已，比如<br>npm install express          # 本地安装<br>npm install express -g   # 全局安装<br>如果出现以下错误：<br>npm err! Error: connect ECONNREFUSED 127.0.0.1:8087<br>解决办法为：<br>$ npm config set proxy null<br>本地安装</module></p>
+<ol>
+<li>将安装包放在 ./node_modules 下（运行 npm 命令时所在的目录），如果没有 node_modules 目录，会在当前执行 npm 命令的目录下生成 node_modules 目录。</li>
+<li>可以通过 require() 来引入本地安装的包。<br>全局安装</li>
+<li>将安装包放在 /usr/local 下或者你 node 的安装目录。</li>
+<li>可以直接在命令行里使用。<br>如果你希望具备两者功能，则需要在两个地方安装它或使用 npm link。<br>接下来我们使用全局方式安装 express<br>$ npm install express -g<br>安装过程输出如下内容，第一行输出了模块的版本号及安装位置。<br><a href="mailto:express@4.13.3" target="_blank" rel="noopener">express@4.13.3</a> node_modules/express<br>├── <a href="mailto:escape-html@1.0.2" target="_blank" rel="noopener">escape-html@1.0.2</a><br>├── <a href="mailto:range-parser@1.0.2" target="_blank" rel="noopener">range-parser@1.0.2</a><br>├── <a href="mailto:merge-descriptors@1.0.0" target="_blank" rel="noopener">merge-descriptors@1.0.0</a><br>├── <a href="mailto:array-flatten@1.1.1" target="_blank" rel="noopener">array-flatten@1.1.1</a><br>├── <a href="mailto:cookie@0.1.3" target="_blank" rel="noopener">cookie@0.1.3</a><br>├── <a href="mailto:utils-merge@1.0.0" target="_blank" rel="noopener">utils-merge@1.0.0</a><br>├── <a href="mailto:parseurl@1.3.0" target="_blank" rel="noopener">parseurl@1.3.0</a><br>├── <a href="mailto:cookie-signature@1.0.6" target="_blank" rel="noopener">cookie-signature@1.0.6</a><br>├── <a href="mailto:methods@1.1.1" target="_blank" rel="noopener">methods@1.1.1</a><br>├── <a href="mailto:fresh@0.3.0" target="_blank" rel="noopener">fresh@0.3.0</a><br>├── <a href="mailto:vary@1.0.1" target="_blank" rel="noopener">vary@1.0.1</a><br>├── <a href="mailto:path-to-regexp@0.1.7" target="_blank" rel="noopener">path-to-regexp@0.1.7</a><br>├── <a href="mailto:content-type@1.0.1" target="_blank" rel="noopener">content-type@1.0.1</a><br>├── <a href="mailto:etag@1.7.0" target="_blank" rel="noopener">etag@1.7.0</a><br>├── <a href="mailto:serve-static@1.10.0" target="_blank" rel="noopener">serve-static@1.10.0</a><br>├── <a href="mailto:content-disposition@0.5.0" target="_blank" rel="noopener">content-disposition@0.5.0</a><br>├── <a href="mailto:depd@1.0.1" target="_blank" rel="noopener">depd@1.0.1</a><br>├── <a href="mailto:qs@4.0.0" target="_blank" rel="noopener">qs@4.0.0</a><br>├── <a href="mailto:finalhandler@0.4.0" target="_blank" rel="noopener">finalhandler@0.4.0</a> (<a href="mailto:unpipe@1.0.0" target="_blank" rel="noopener">unpipe@1.0.0</a>)<br>├── <a href="mailto:on-finished@2.3.0" target="_blank" rel="noopener">on-finished@2.3.0</a> (<a href="mailto:ee-first@1.1.1" target="_blank" rel="noopener">ee-first@1.1.1</a>)<br>├── <a href="mailto:proxy-addr@1.0.8" target="_blank" rel="noopener">proxy-addr@1.0.8</a> (<a href="mailto:forwarded@0.1.0" target="_blank" rel="noopener">forwarded@0.1.0</a>, <a href="mailto:ipaddr.js@1.0.1" target="_blank" rel="noopener">ipaddr.js@1.0.1</a>)<br>├── <a href="mailto:debug@2.2.0" target="_blank" rel="noopener">debug@2.2.0</a> (<a href="mailto:ms@0.7.1" target="_blank" rel="noopener">ms@0.7.1</a>)<br>├── <a href="mailto:type-is@1.6.8" target="_blank" rel="noopener">type-is@1.6.8</a> (<a href="mailto:media-typer@0.3.0" target="_blank" rel="noopener">media-typer@0.3.0</a>, <a href="mailto:mime-types@2.1.6" target="_blank" rel="noopener">mime-types@2.1.6</a>)<br>├── <a href="mailto:accepts@1.2.12" target="_blank" rel="noopener">accepts@1.2.12</a> (<a href="mailto:negotiator@0.5.3" target="_blank" rel="noopener">negotiator@0.5.3</a>, <a href="mailto:mime-types@2.1.6" target="_blank" rel="noopener">mime-types@2.1.6</a>)<br>└── <a href="mailto:send@0.13.0" target="_blank" rel="noopener">send@0.13.0</a> (<a href="mailto:destroy@1.0.3" target="_blank" rel="noopener">destroy@1.0.3</a>, <a href="mailto:statuses@1.2.1" target="_blank" rel="noopener">statuses@1.2.1</a>, <a href="mailto:ms@0.7.1" target="_blank" rel="noopener">ms@0.7.1</a>, <a href="mailto:mime@1.3.4" target="_blank" rel="noopener">mime@1.3.4</a>, <a href="mailto:http-errors@1.3.1" target="_blank" rel="noopener">http-errors@1.3.1</a>)<br>查看安装信息<br>你可以使用以下命令来查看所有全局安装的模块：<br>$ npm list -g</li>
+</ol>
+<p>├─┬ <a href="mailto:cnpm@4.3.2" target="_blank" rel="noopener">cnpm@4.3.2</a><br>│ ├── <a href="mailto:auto-correct@1.0.0" target="_blank" rel="noopener">auto-correct@1.0.0</a><br>│ ├── <a href="mailto:bagpipe@0.3.5" target="_blank" rel="noopener">bagpipe@0.3.5</a><br>│ ├── <a href="mailto:colors@1.1.2" target="_blank" rel="noopener">colors@1.1.2</a><br>│ ├─┬ <a href="mailto:commander@2.9.0" target="_blank" rel="noopener">commander@2.9.0</a><br>│ │ └── <a href="mailto:graceful-readlink@1.0.1" target="_blank" rel="noopener">graceful-readlink@1.0.1</a><br>│ ├─┬ <a href="mailto:cross-spawn@0.2.9" target="_blank" rel="noopener">cross-spawn@0.2.9</a><br>│ │ └── <a href="mailto:lru-cache@2.7.3" target="_blank" rel="noopener">lru-cache@2.7.3</a><br>……<br>如果要查看某个模块的版本号，可以使用命令如下：<br>$ npm list grunt</p>
+<p>projectName@projectVersion /path/to/project/folder<br>└── <a href="mailto:grunt@0.4.1" target="_blank" rel="noopener">grunt@0.4.1</a><br>使用 package.json<br>package.json 位于模块的目录下，用于定义包的属性。接下来让我们来看下 express 包的 package.json 文件，位于 node_modules/express/package.json 内容：<br>{<br>  “name”: “express”,<br>  “description”: “Fast, unopinionated, minimalist web framework”,<br>  “version”: “4.13.3”,<br>  “author”: {<br>    “name”: “TJ Holowaychuk”,<br>    “email”: “<a href="mailto:tj@vision-media.ca" target="_blank" rel="noopener">tj@vision-media.ca</a>“<br>  },<br>  “contributors”: [<br>    {<br>      “name”: “Aaron Heckmann”,<br>      “email”: “<a href="mailto:aaron.heckmann+github@gmail.com" target="_blank" rel="noopener">aaron.heckmann+github@gmail.com</a>“<br>    },<br>    {<br>      “name”: “Ciaran Jessup”,<br>      “email”: “<a href="mailto:ciaranj@gmail.com" target="_blank" rel="noopener">ciaranj@gmail.com</a>“<br>    },<br>    {<br>      “name”: “Douglas Christopher Wilson”,<br>      “email”: “<a href="mailto:doug@somethingdoug.com" target="_blank" rel="noopener">doug@somethingdoug.com</a>“<br>    },<br>    {<br>      “name”: “Guillermo Rauch”,<br>      “email”: “<a href="mailto:rauchg@gmail.com" target="_blank" rel="noopener">rauchg@gmail.com</a>“<br>    },<br>    {<br>      “name”: “Jonathan Ong”,<br>      “email”: “<a href="mailto:me@jongleberry.com" target="_blank" rel="noopener">me@jongleberry.com</a>“<br>    },<br>    {<br>      “name”: “Roman Shtylman”,<br>      “email”: “<a href="mailto:shtylman+expressjs@gmail.com" target="_blank" rel="noopener">shtylman+expressjs@gmail.com</a>“<br>    },<br>    {<br>      “name”: “Young Jae Sim”,<br>      “email”: “<a href="mailto:hanul@hanul.me" target="_blank" rel="noopener">hanul@hanul.me</a>“<br>    }<br>  ],<br>  “license”: “MIT”,<br>  “repository”: {<br>    “type”: “git”,<br>    “url”: “git+<a href="https://github.com/strongloop/express.git&quot;" target="_blank" rel="noopener">https://github.com/strongloop/express.git&quot;</a><br>  },<br>  “homepage”: “<a href="http://expressjs.com/&quot;" target="_blank" rel="noopener">http://expressjs.com/&quot;</a>,<br>  “keywords”: [<br>    “express”,<br>    “framework”,<br>    “sinatra”,<br>    “web”,<br>    “rest”,<br>    “restful”,<br>    “router”,<br>    “app”,<br>    “api”<br>  ],<br>  “dependencies”: {<br>    “accepts”: “~1.2.12”,<br>    “array-flatten”: “1.1.1”,<br>    “content-disposition”: “0.5.0”,<br>    “content-type”: “~1.0.1”,<br>    “cookie”: “0.1.3”,<br>    “cookie-signature”: “1.0.6”,<br>    “debug”: “~2.2.0”,<br>    “depd”: “~1.0.1”,<br>    “escape-html”: “1.0.2”,<br>    “etag”: “~1.7.0”,<br>    “finalhandler”: “0.4.0”,<br>    “fresh”: “0.3.0”,<br>    “merge-descriptors”: “1.0.0”,<br>    “methods”: “~1.1.1”,<br>    “on-finished”: “~2.3.0”,<br>    “parseurl”: “~1.3.0”,<br>    “path-to-regexp”: “0.1.7”,<br>    “proxy-addr”: “~1.0.8”,<br>    “qs”: “4.0.0”,<br>    “range-parser”: “~1.0.2”,<br>    “send”: “0.13.0”,<br>    “serve-static”: “~1.10.0”,<br>    “type-is”: “~1.6.6”,<br>    “utils-merge”: “1.0.0”,<br>    “vary”: “~1.0.1”<br>  },<br>  “devDependencies”: {<br>    “after”: “0.8.1”,<br>    “ejs”: “2.3.3”,<br>    “istanbul”: “0.3.17”,<br>    “marked”: “0.3.5”,<br>    “mocha”: “2.2.5”,<br>    “should”: “7.0.2”,<br>    “supertest”: “1.0.1”,<br>    “body-parser”: “~1.13.3”,<br>    “connect-redis”: “~2.4.1”,<br>    “cookie-parser”: “~1.3.5”,<br>    “cookie-session”: “~1.2.0”,<br>    “express-session”: “~1.11.3”,<br>    “jade”: “~1.11.0”,<br>    “method-override”: “~2.3.5”,<br>    “morgan”: “~1.6.1”,<br>    “multiparty”: “~4.1.2”,<br>    “vhost”: “~3.0.1”<br>  },<br>  “engines”: {<br>    “node”: “&gt;= 0.10.0”<br>  },<br>  “files”: [<br>    “LICENSE”,<br>    “History.md”,<br>    “Readme.md”,<br>    “index.js”,<br>    “lib/“<br>  ],<br>  “scripts”: {<br>    “test”: “mocha –require test/support/env –reporter spec –bail –check-leaks test/ test/acceptance/“,<br>    “test-ci”: “istanbul cover node_modules/mocha/bin/_mocha –report lcovonly – –require test/support/env –reporter spec –check-leaks test/ test/acceptance/“,<br>    “test-cov”: “istanbul cover node_modules/mocha/bin/_mocha – –require test/support/env –reporter dot –check-leaks test/ test/acceptance/“,<br>    “test-tap”: “mocha –require test/support/env –reporter tap –check-leaks test/ test/acceptance/“<br>  },<br>  “gitHead”: “ef7ad681b245fba023843ce94f6bcb8e275bbb8e”,<br>  “bugs”: {<br>    “url”: “<a href="https://github.com/strongloop/express/issues&quot;" target="_blank" rel="noopener">https://github.com/strongloop/express/issues&quot;</a><br>  },<br>  “_id”: “<a href="mailto:express@4.13.3" target="_blank" rel="noopener">express@4.13.3</a>“,<br>  “_shasum”: “ddb2f1fb4502bf33598d2b032b037960ca6c80a3”,<br>  “_from”: “express@*”,<br>  “_npmVersion”: “1.4.28”,<br>  “_npmUser”: {<br>    “name”: “dougwilson”,<br>    “email”: “<a href="mailto:doug@somethingdoug.com" target="_blank" rel="noopener">doug@somethingdoug.com</a>“<br>  },<br>  “maintainers”: [<br>    {<br>      “name”: “tjholowaychuk”,<br>      “email”: “<a href="mailto:tj@vision-media.ca" target="_blank" rel="noopener">tj@vision-media.ca</a>“<br>    },<br>    {<br>      “name”: “jongleberry”,<br>      “email”: “<a href="mailto:jonathanrichardong@gmail.com" target="_blank" rel="noopener">jonathanrichardong@gmail.com</a>“<br>    },<br>    {<br>      “name”: “dougwilson”,<br>      “email”: “<a href="mailto:doug@somethingdoug.com" target="_blank" rel="noopener">doug@somethingdoug.com</a>“<br>    },<br>    {<br>      “name”: “rfeng”,<br>      “email”: “<a href="mailto:enjoyjava@gmail.com" target="_blank" rel="noopener">enjoyjava@gmail.com</a>“<br>    },<br>    {<br>      “name”: “aredridel”,<br>      “email”: “<a href="mailto:aredridel@dinhe.net" target="_blank" rel="noopener">aredridel@dinhe.net</a>“<br>    },<br>    {<br>      “name”: “strongloop”,<br>      “email”: “<a href="mailto:callback@strongloop.com" target="_blank" rel="noopener">callback@strongloop.com</a>“<br>    },<br>    {<br>      “name”: “defunctzombie”,<br>      “email”: “<a href="mailto:shtylman@gmail.com" target="_blank" rel="noopener">shtylman@gmail.com</a>“<br>    }<br>  ],<br>  “dist”: {<br>    “shasum”: “ddb2f1fb4502bf33598d2b032b037960ca6c80a3”,<br>    “tarball”: “<a href="http://registry.npmjs.org/express/-/express-4.13.3.tgz&quot;" target="_blank" rel="noopener">http://registry.npmjs.org/express/-/express-4.13.3.tgz&quot;</a><br>  },<br>  “directories”: {},<br>  “_resolved”: “<a href="https://registry.npmjs.org/express/-/express-4.13.3.tgz&quot;" target="_blank" rel="noopener">https://registry.npmjs.org/express/-/express-4.13.3.tgz&quot;</a>,<br>  “readme”: “ERROR: No README data found!”<br>}<br>Package.json 属性说明<br>name - 包名。<br>version - 包的版本号。<br>description - 包的描述。<br>homepage - 包的官网 url 。<br>author - 包的作者姓名。<br>contributors - 包的其他贡献者姓名。<br>dependencies - 依赖包列表。如果依赖包没有安装，npm 会自动将依赖包安装在 node_module 目录下。<br>repository - 包代码存放的地方的类型，可以是 git 或 svn，git 可在 Github 上。<br>main - main 字段是一个模块ID，它是一个指向你程序的主要项目。就是说，如果你包的名字叫 express，然后用户安装它，然后require(“express”)。<br>keywords - 关键字<br>卸载模块<br>我们可以使用以下命令来卸载 Node.js 模块。<br>$ npm uninstall express<br>卸载后，你可以到 /node_modules/ 目录下查看包是否还存在，或者使用以下命令查看：<br>$ npm ls<br>更新模块<br>我们可以使用以下命令更新模块：<br>$ npm update express<br>搜索模块<br>使用以下来搜索模块：<br>$ npm search express<br>创建模块<br>创建模块，package.json 文件是必不可少的。我们可以使用 NPM 生成 package.json 文件，生成的文件包含了基本的结果。<br>$ npm init<br>This utility will walk you through creating a package.json file.<br>It only covers the most common items, and tries to guess sensible defaults.</p>
+<p>See <code>npm help json</code> for definitive documentation on these fields<br>and exactly what they do.</p>
+<p>Use <code>npm install &lt;pkg&gt; --save</code> afterwards to install a package and<br>save it as a dependency in the package.json file.</p>
+<p>Press ^C at any time to quit.<br>name: (node_modules) runoob                   # 模块名<br>version: (1.0.0)<br>description: Node.js 测试模块(<a href="http://www.runoob.com" target="_blank" rel="noopener">www.runoob.com</a>)  # 描述<br>entry point: (index.js)<br>test command: make test<br>git repository: <a href="https://github.com/runoob/runoob.git" target="_blank" rel="noopener">https://github.com/runoob/runoob.git</a>  # Github 地址<br>keywords:<br>author:<br>license: (ISC)<br>About to write to ……/node_modules/package.json:      # 生成地址</p>
+<p>{<br>  “name”: “runoob”,<br>  “version”: “1.0.0”,<br>  “description”: “Node.js 测试模块(<a href="http://www.runoob.com)&quot;" target="_blank" rel="noopener">www.runoob.com)&quot;</a>,<br>  ……<br>}</p>
+<p>Is this ok? (yes) yes<br>以上的信息，你需要根据你自己的情况输入。在最后输入 “yes” 后会生成 package.json 文件。<br>接下来我们可以使用以下命令在 npm 资源库中注册用户（使用邮箱注册）：<br>$ npm adduser<br>Username: mcmohd<br>Password:<br>Email: (this IS public) <a href="mailto:mcmohd@gmail.com" target="_blank" rel="noopener">mcmohd@gmail.com</a><br>接下来我们就用以下命令来发布模块：<br>$ npm publish<br>如果你以上的步骤都操作正确，你就可以跟其他模块一样使用 npm 来安装。<br>版本号<br>使用NPM下载和发布代码时都会接触到版本号。NPM使用语义版本号来管理代码，这里简单介绍一下。<br>语义版本号分为X.Y.Z三位，分别代表主版本号、次版本号和补丁版本号。当代码变更时，版本号按以下原则更新。<br>如果只是修复bug，需要更新Z位。<br>如果是新增了功能，但是向下兼容，需要更新Y位。<br>如果有大变动，向下不兼容，需要更新X位。<br>版本号有了这个保证后，在申明第三方包依赖时，除了可依赖于一个固定版本号外，还可依赖于某个范围的版本号。例如”argv”: “0.0.x”表示依赖于0.0.x系列的最新版argv。<br>NPM支持的所有版本号范围指定方式可以查看官方文档。<br>NPM 常用命令<br>除了本章介绍的部分外，NPM还提供了很多功能，package.json里也有很多其它有用的字段。<br>除了可以在npmjs.org/doc/查看官方文档外，这里再介绍一些NPM常用命令。<br>NPM提供了很多命令，例如install和publish，使用npm help可查看所有命令。<br>NPM提供了很多命令，例如install和publish，使用npm help可查看所有命令。<br>使用npm help <command>可查看某条命令的详细帮助，例如npm help install。<br>在package.json所在目录下使用npm install . -g可先在本地安装当前命令行程序，可用于发布前的本地测试。<br>使用npm update <package>可以把当前目录下node_modules子目录里边的对应模块更新至最新版本。<br>使用npm update <package> -g可以把全局安装的对应命令行程序更新至最新版。<br>使用npm cache clear可以清空NPM本地缓存，用于对付使用相同版本号发布新版本代码的人。<br>使用npm unpublish <package>@<version>可以撤销发布自己发布过的某个版本代码。<br>使用淘宝 NPM 镜像<br>大家都知道国内直接使用 npm 的官方镜像是非常慢的，这里推荐使用淘宝 NPM 镜像。<br>淘宝 NPM 镜像是一个完整 npmjs.org 镜像，你可以用此代替官方版本(只读)，同步频率目前为 10分钟 一次以保证尽量与官方服务同步。<br>你可以使用淘宝定制的 cnpm (gzip 压缩支持) 命令行工具代替默认的 npm:<br>$ npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a><br>这样就可以使用 cnpm 命令来安装模块了：<br>$ cnpm install [name]</version></package></package></package></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tool/" rel="tag"># Tool</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/10/springmvc初识/" rel="next" title="Springmvc初识">
+                <i class="fa fa-chevron-left"></i> Springmvc初识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/10/node.js-01/" rel="prev" title="Node.js 创建第一个应用">
+                Node.js 创建第一个应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/Koala.jpg"
+               alt="WUZHOU" />
+          <p class="site-author-name" itemprop="name">WUZHOU</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WUZHOU</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,983 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="软件架构," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="什么是架构架构的英文是Architecture，在Wikipedia上，架构是这样定义的：  Architecture (Latin architectura, from the Greek ἀρχιτέκτων arkhitekton”architect”, from ἀρχι- “chief” and τέκτων “builder”) is both the process and the">
+<meta name="keywords" content="软件架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="架构漫谈（一）：什么是架构">
+<meta property="og:url" content="https://skiyubon.github.io/2017/04/17/架构漫谈（一）：什么是架构/index.html">
+<meta property="og:site_name" content="Skiyubon&#39;s	Blog">
+<meta property="og:description" content="什么是架构架构的英文是Architecture，在Wikipedia上，架构是这样定义的：  Architecture (Latin architectura, from the Greek ἀρχιτέκτων arkhitekton”architect”, from ἀρχι- “chief” and τέκτων “builder”) is both the process and the">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-04-18T01:07:51.323Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="架构漫谈（一）：什么是架构">
+<meta name="twitter:description" content="什么是架构架构的英文是Architecture，在Wikipedia上，架构是这样定义的：  Architecture (Latin architectura, from the Greek ἀρχιτέκτων arkhitekton”architect”, from ἀρχι- “chief” and τέκτων “builder”) is both the process and the">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://skiyubon.github.io/2017/04/17/架构漫谈（一）：什么是架构/"/>
+
+
+
+
+
+  <title> 架构漫谈（一）：什么是架构 | Skiyubon's	Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Skiyubon's	Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/baidusitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://skiyubon.github.io/2017/04/17/架构漫谈（一）：什么是架构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WUZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/Koala.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Skiyubon's	Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                架构漫谈（一）：什么是架构
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-17T14:11:31+08:00">
+                2017-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/软件架构/" itemprop="url" rel="index">
+                    <span itemprop="name">软件架构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="什么是架构"><a href="#什么是架构" class="headerlink" title="什么是架构"></a>什么是架构</h1><p>架构的英文是Architecture，在Wikipedia上，架构是这样定义的：</p>
+<blockquote>
+<p>Architecture (Latin architectura, from the Greek ἀρχιτέκτων arkhitekton”architect”, from ἀρχι- “chief” and τέκτων “builder”) is both the process and the product of planning, designing, and constructing buildings and other physical structures。</p>
+</blockquote>
+<blockquote>
+<p>建筑（拉丁建筑师，来自ἀρχι-“酋长”和“ἀκ”“建筑师”的希腊语ἀρχιτέκτωνarkhitekton“建筑师”）是规划，设计和建造建筑物和其他物理结构的过程和产物。</p>
+</blockquote>
+<p>从这个定义上看，架构好像是一个过程，也不是很清晰。为了讲清楚这个问题，我们先来看看为什么会产生架构。</p>
+<h1 id="软件架构到底是要解决什么问题"><a href="#软件架构到底是要解决什么问题" class="headerlink" title="软件架构到底是要解决什么问题"></a>软件架构到底是要解决什么问题</h1><h2 id="要解决谁的问题？"><a href="#要解决谁的问题？" class="headerlink" title="要解决谁的问题？"></a>要解决谁的问题？</h2><p>如前所述，软件实际上就是把现实生活模拟到计算机中，并且软件是需要在计算机的硬件中运行起来的。要做到这一点需要解决两个问题：</p>
+<ol>
+<li><p>业务问题<br>具体的现实生活状态下，没有软件的时候，所解决的问题的主体是谁，解决的是什么问题，是如何解决，如何运作的？</p>
+</li>
+<li><p>计算机问题</p>
+<ol>
+<li>如何把现实生活用软件来模拟？</li>
+<li>模拟出来的软件，需要哪些硬件设施才能够满足要求？ 并且当访问量越来越大的时候，软件能否支持硬件慢慢长大，性能线性扩展？</li>
+<li>因为硬件是可能会失效的，软件如何在硬件失效的情况下，仍然能够保证可用性，让用户能够不中断的访问软件提供的服务？</li>
+<li>怎么收集软件产生的数据，为下一阶段的工作提供依据？</li>
+</ol>
+</li>
+</ol>
+<h2 id="分别是谁的问题呢？"><a href="#分别是谁的问题呢？" class="headerlink" title="分别是谁的问题呢？"></a>分别是谁的问题呢？</h2><ol>
+<li>业务的owner需要提升业务的效率，降低业务的成本，这是动机。这个实际上就是业务的问题，所以一般软件开发的出发点就在这里。</li>
+<li>是软件工程师的问题，要解决业务owner把业务虚拟化的问题，并且要解决软件开发和运营的生命周期的问题。</li>
+</ol>
+<h2 id="分别有什么问题？"><a href="#分别有什么问题？" class="headerlink" title="分别有什么问题？"></a>分别有什么问题？</h2><ol>
+<li>业务问题的本质，是业务所服务的对象的利益问题，明白了这个，就很容易搞清业务的概念和组织方式。再次强调一下，有了软件，可以降低业务的成本，没有软件的情况下，业务是一样跑的。如果只是为了跟风要用软件，说不定反而提高了成本，这个是采用软件之前首先要先搞清楚的。我们经常说软件和技术是业务的enabler，实际就是把原来成本很高的降到到了很低的程度而已，并不是有了什么新的业务。另外软件也不是降低业务成本的唯一方式。</li>
+<li><p>为了能够让软件很好的跑起来，软件工程师必须理解业务所服务的对象，他们的利益所在，即业务问题。业务面对这些问题是如何分拆解决的？ 涉及到了哪些概念？ 这些概念分别解决了哪些哪些问题？ 我们不能自己按照自己的理解，用自己的一套概念体系来表述。如果这么做的话，会导致两个问题：</p>
+<ol>
+<li>业务无法和我们交流，因为他们无法明白我们所自己创建的概念，所以他们无法确认我们的理解是否正确。</li>
+<li>我们所表述的东西，并没有在实际生活中实践过，我们也不知道这些概念是否能够解决业务的问题。</li>
+</ol>
+</li>
+<li><p>软件工程师还必须要考虑，用什么样的硬件把软件跑起来，怎样跑得好，跑得快，并且可以随着业务的流量逐渐的长大？</p>
+</li>
+</ol>
+<h2 id="分析问题"><a href="#分析问题" class="headerlink" title="分析问题"></a>分析问题</h2><p>对于2，在有限的时间下，软件工程师毫无疑问无法一个人去完成这么多事情，那么我们需要把所做的事情列出来，进行分析。</p>
+<h3 id="虚拟化业务需要完成这些事情："><a href="#虚拟化业务需要完成这些事情：" class="headerlink" title="虚拟化业务需要完成这些事情："></a>虚拟化业务需要完成这些事情：</h3><ol>
+<li>学习业务知识，认识业务所涉及的stakeholders的核心利益述求，以及业务是如何分拆满足这些利益述求，并通过怎样的组织架构完成整个组织的核心利益的，以及业务运作的流程，涉及到哪些概念，有哪些权利和责任等。</li>
+<li>通过对业务知识的学习，针对这些概念所对应的权利和责任以及组织架构，对业务进行建模，把并把建模的结果用编程语言实现。这是业务的模型，通常是现实生活中利益斗争的结果，是非常稳定的。</li>
+<li>学习业务所参与的stakeholder是如何和业务打交道，并完成每个人的权利和义务的，并通过编程语言，结合业务模型实现这些打交道的沟通通道。这部分是变化最频繁的，属于组合关系。明白了这一点，对后续的实现非常有帮助。</li>
+<li>如何把业务运行的结果，持久化，并通过合适的手段把持久化后的数据，在合适的时间合适的地点加载出来。这部分和基础设施有关，变化可能也会比较频繁。</li>
+</ol>
+<h3 id="代码如何运营，需要完成这些事情："><a href="#代码如何运营，需要完成这些事情：" class="headerlink" title="代码如何运营，需要完成这些事情："></a>代码如何运营，需要完成这些事情：</h3><ol>
+<li>需要多少硬件设备来满足访问的需求？</li>
+<li>代码要分成多少个组件部署到哪些硬件设备上？</li>
+<li>这些代码如何通过硬件设备互相连接在一起？</li>
+<li>当业务流量增大到超过一台机器的容量时，软件能否支持通过部署到新增机器上的方式，扩大对业务的支撑？</li>
+<li>当某台或某些硬件设备失效时，软件是否仍然能够不影响用户的访问。</li>
+<li>软件运行产生的数据，能否支持提取出来并加以分析，为下一轮的业务决策提供依据。</li>
+</ol>
+<h3 id="如果分成不同的角色来完成这些事情，就需要一个组织架构来组织代码的编写和运营，需要做哪些事情："><a href="#如果分成不同的角色来完成这些事情，就需要一个组织架构来组织代码的编写和运营，需要做哪些事情：" class="headerlink" title="如果分成不同的角色来完成这些事情，就需要一个组织架构来组织代码的编写和运营，需要做哪些事情："></a>如果分成不同的角色来完成这些事情，就需要一个组织架构来组织代码的编写和运营，需要做哪些事情：</h3><ol>
+<li>完成一和二所列的这些事情，需要哪些角色参与？</li>
+<li>这些事情基本都需要顺序的发生，如何保证信息在不同角色的传递过程中不会有损失？ 或者说即使有损失，也能快速纠正？</li>
+<li>这些角色之间是如何协调，才能共同完成虚拟化业务的需求？</li>
+</ol>
+<h2 id="会产生哪些架构"><a href="#会产生哪些架构" class="headerlink" title="会产生哪些架构"></a>会产生哪些架构</h2><p>如果业务足够简单，用户流量够小，时间要求也不急迫，那么一个人，一台机器就够了，这个时候一般不会去讨论架构的问题。当访问的流量越来越大，机器就会越来越多，代码的部署单元就会拆分的越来越多。</p>
+<p>同样就会需要越来越多的人来完成拆分出来的越来越多的部署单元，甚至同一个部署单元也需要分拆为多人合作完成。但是我们需要注意到一点，整个的概念体系，或者说业务的建模不会有任何的变化，还是完成同样的这些事情。唯一的区别就是量越来越大，超过了单个人和单个机器的容量，不断地增长。这样就会导致以下的架构：</p>
+<ol>
+<li>当流量越来越大，我们就会发现，软件所部属的机器就会开始按照树状的结构开始分拆，就会形成硬件的部属架构。这就是为什么会形成部署的分层。</li>
+<li>为了把业务在软件中实现并落地，需要前端人员、业务代码人员、存储层等不同技巧的人同时工作，需要切分成代码的架构。这就是为什么会形成代码的分层，形成代码的架构。当然，当这些角色由一个人来完成的时候，不一定会有代码架构，往往会比较乱。</li>
+<li>当参与的人员越来越多，就会形成开发体系的组织架构。因为代码开发的过程是一个连续的过程，会用流程来吧不同的角色串联起来，这就是软件工程。</li>
+<li>为了完成业务的工作，需要识别出来业务架构和支撑业务的组织架构，以及业务运作的流程。这是被虚拟化的业务架构和组织架构，也需要体现在代码中，保持和现实生活中一致。</li>
+</ol>
+<h2 id="什么是软件架构"><a href="#什么是软件架构" class="headerlink" title="什么是软件架构"></a>什么是软件架构</h2><p>这就是软件比较复杂的地方，涉及到软件本身的业务体系，和所虚拟的业务体系。根据以上的分析，所生成的架构，究竟那些算是软件架构呢？</p>
+<ol>
+<li><p>软件因为流量增大而分拆成不同的运行单元，在不同的机器上部署所形成的架构，属于软件架构。</p>
+</li>
+<li><p>每个运行单元为了让不同角色的人，比如前端，业务，数据存储等能够并行工作，所分成的代码架构，也属于软件架构。</p>
+</li>
+</ol>
+<p>所以当我们说软件架构的时候，我们一定要讲清楚，究竟说的是部署的架构，还是代码的架构。软件架构的落地，需要软件的组织架构和流程来保障，离开了这个，软件架构是一句空话。</p>
+<p>另外很多人讲，架构是进化出来的。架构实际上是在量不断的增大，超过了单台服务器的容量，逐渐的分拆，同时导致超过单个人员的能力，工作人员不断的增多，工作内容不断的分拆形成的。这本身就是架构的意义所在。不管怎么分拆，所达到的目标没有任何变化，就是完成业务在计算机中的虚拟化。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/软件架构/" rel="tag"># 软件架构</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/13/MyBatis/" rel="next" title="MyBatis">
+                <i class="fa fa-chevron-left"></i> MyBatis
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/23/Redis/" rel="prev" title="Redis">
+                Redis <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/Koala.jpg"
+               alt="WUZHOU" />
+          <p class="site-author-name" itemprop="name">WUZHOU</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是架构"><span class="nav-number">1.</span> <span class="nav-text">什么是架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#软件架构到底是要解决什么问题"><span class="nav-number">2.</span> <span class="nav-text">软件架构到底是要解决什么问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#要解决谁的问题？"><span class="nav-number">2.1.</span> <span class="nav-text">要解决谁的问题？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分别是谁的问题呢？"><span class="nav-number">2.2.</span> <span class="nav-text">分别是谁的问题呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分别有什么问题？"><span class="nav-number">2.3.</span> <span class="nav-text">分别有什么问题？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析问题"><span class="nav-number">2.4.</span> <span class="nav-text">分析问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟化业务需要完成这些事情："><span class="nav-number">2.4.1.</span> <span class="nav-text">虚拟化业务需要完成这些事情：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码如何运营，需要完成这些事情："><span class="nav-number">2.4.2.</span> <span class="nav-text">代码如何运营，需要完成这些事情：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如果分成不同的角色来完成这些事情，就需要一个组织架构来组织代码的编写和运营，需要做哪些事情："><span class="nav-number">2.4.3.</span> <span class="nav-text">如果分成不同的角色来完成这些事情，就需要一个组织架构来组织代码的编写和运营，需要做哪些事情：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#会产生哪些架构"><span class="nav-number">2.5.</span> <span class="nav-text">会产生哪些架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是软件架构"><span class="nav-number">2.6.</span> <span class="nav-text">什么是软件架构</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WUZHOU</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
